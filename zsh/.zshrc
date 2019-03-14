@@ -5,6 +5,22 @@
 export TERM="xterm-256color"
 export ZSH="/home/oswinso/.oh-my-zsh"
 export EDITOR=vim
+export PATH="/usr/local/clang_7.0.1/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/clang_7.0.1/lib:$LD_LIBRARY_PATH"
+export PATH="/usr/local/cuda/bin:$PATH"
+export PATH="/opt/cubelib/bin:$PATH"
+export PATH="/opt/cubew/bin:$PATH"
+export PATH="/opt/cubegui/bin:$PATH"
+export PATH="/opt/scorep/bin:$PATH"
+export PATH="/opt/scalasca/bin:$PATH"
+export PATH="/opt/ompp/bin:$PATH"
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
+export CUDA_HOME="/usr/local/cuda"
+export PATH="$HOME/.npm-global/bin:$PATH"
+
+source "$HOME/antigen.zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -63,7 +79,7 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰\uF460 "
 
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context ssh root_indicator dir_writable dir )
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir vcs)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(root_indicator context dir_writable dir vcs)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv root_indicator context dir_writable dir vcs)
 POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status time ssh)
 
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND="green"
@@ -217,9 +233,14 @@ plugins=(
   git
   zsh-autosuggestions
   fast-syntax-highlighting
+  docker
+  virtualenv
+  z
 )
 
 source $ZSH/oh-my-zsh.sh
+
+antigen bundle andrewferrier/fzf-z
 
 # User configuration
 
@@ -251,5 +272,31 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source /opt/ros/melodic/setup.zsh
-source ~/Documents/catkin_ws/devel/setup.zsh
+source "/opt/ros/melodic/setup.zsh"
+source ~/zsh-interactive-cd.plugin.zsh
+setopt noincappendhistory
+setopt nosharehistory
+setopt appendhistory
+source "$HOME/catkin_ws/devel/setup.zsh"
+source "$HOME/.bin/tmuxinator.zsh"
+source "$HOME/.bin/fzf.zsh"
+
+export PATH="$PATH:/home/oswinso/.vimpkg/bin"
+
+# opam configuration
+test -r /home/oswinso/.opam/opam-init/init.zsh && . /home/oswinso/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+antigen apply
+
+if [ -f ~/.ssh/agent.env ] ; then
+    . ~/.ssh/agent.env > /dev/null
+    if ! kill -0 $SSH_AGENT_PID > /dev/null 2>&1; then
+        echo "Stale agent file found. Spawning new agent… "
+        eval `ssh-agent | tee ~/.ssh/agent.env`
+        ssh-add
+    fi
+else
+    echo "Starting ssh-agent"
+    eval `ssh-agent | tee ~/.ssh/agent.env`
+    ssh-add
+fi

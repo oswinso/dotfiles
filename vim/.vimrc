@@ -64,27 +64,16 @@ let g:solarized_termcolors=256
 let g:solarized_termtrans=1
 colorscheme solarized
 
-let g:syntastic_java_checkers = ['checkstyle', 'javac']
-let g:syntastic_java_checkstyle_classpath = '~/checkstyle-8.12-all.jar'
-let g:syntastic_java_checkstyle_conf_file = '~/cs1331_checkstyle.xml'
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-" see :h syntastic-loclist-callback
-function! SyntasticCheckHook(errors)
-    if !empty(a:errors)
-        let g:syntastic_loc_list_height = min([len(a:errors), 10])
-    endif
-endfunction
-
-let g:cpp_class_scope_highlight = 1
-let g:cpp_member_variable_highlight = 1
-let g:cpp_class_decl_highlight = 1
-
 set rtp+=~/.fzf
+call pathogen#helptags()
+
+set completeopt+=menuone
+set completeopt+=noselect
+set shortmess+=c   " Shut off completion messages
+set belloff+=ctrlg " If Vim beeps during completion
+
+let g:mucomplete#enable_auto_at_startup = 1
+set runtimepath^=~/.vim/bundle/ctrlp.vim
+let g:racer_cmd = "/home/oswinso/.cargo/bin/racer"
+let g:racer_experimental_completer = 1
+let g:ycm_autoclose_preview_window_after_completion = 0

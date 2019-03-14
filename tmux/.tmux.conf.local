@@ -293,3 +293,8 @@ set -g mode-keys vi
 
 # move status line to top
 #set -g status-position top
+
+unbind Left
+unbind Down
+unbind Right
+unbind Up
