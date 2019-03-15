@@ -1,0 +1,11 @@
+let mapleader = " "
+map <Leader>u :action FindUsages<CR>
+map <Leader>g :action Generate<CR>
+map <Leader>i :action GotoImplementation<CR>
+map <Leader>s :action SurroundWith<CR>
+map <Leader>f :action Tool_External Tools_clang-format<CR>
+map <Leader>p :action ParameterInfo<CR>
+
+map <C-h> :action TypeHierarchy<CR>
+imap <C-v> <Esc>:action $Paste<CR>
+map <Leader>b :action GotoDeclaration<CR>
