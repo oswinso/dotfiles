@@ -12,3 +12,6 @@ map <Leader>b :action GotoDeclaration<CR>
 
 nnoremap gn :action GotoNextError<CR>
 nnoremap gp :action GotoPreviousError<CR>
+
+:set number relativenumber
+:set nu rnu

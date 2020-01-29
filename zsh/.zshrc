@@ -52,6 +52,38 @@ export DISTCC_SSH="ssh"
 export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 export CUDA_HOME="/usr/local/cuda"
 export PATH="$HOME/.npm-global/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
+# Lets put /usr/bin in front of /usr/local/bin
+export PATH="/usr/bin:$PATH"
+
+# Quartus
+export PATH="/home/oswinso/intelFPGA/18.0/quartus/bin:$PATH"
+
+# clang-9
+export PATH="/opt/clang_9.0.0/bin:$PATH"
+
+# Emscripten
+# source /opt/emsdk/emsdk_env.sh
+export PATH="/opt/emsdk:$PATH"
+export PATH="/opt/emsdk/upstream/emscripten:$PATH"
+export PATH="/opt/emsdk/node/12.9.1_64bit/bin:$PATH"
+
+# TBB
+export TBBROOT=/opt/tbb/tbb2019_20191006oss
+export TBB_ROOT=$TBBROOT
+source /opt/tbb/tbb2019_20191006oss/bin/tbbvars.sh intel64 linux auto_tbbroot
+source /opt/tbb/pstl2019_20191006oss/bin/pstlvars.sh intel64 linux auto_tbbroot
+
+# gcc ARM toolchain
+export PATH="/opt/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
+
+# ccache
+export PATH="/usr/lib/ccache:$PATH"
+
+# Jaus Toolset
+export JTS_COMMON_PATH="/opt/jaustoolset/GUI/templates/Common"
+export CLASSPATH="/opt/jaustoolset/GUI/src:$CLASS_PATH"
 
 # export CCACHE_PREFIX="distcc"
 # export DISTCC_HOSTS="localhost/4 10.8.0.6/8"
@@ -276,19 +308,20 @@ POWERLEVEL9K_BATTERY_DISCONNECTED_BACKGROUND="$DEFAULT_BACKGROUND"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   git
-  zsh-autosuggestions
-  fast-syntax-highlighting
   docker
   virtualenv
   z
   npm
   cargo
   colored-man-pages
+  fzf
 )
 
 source $ZSH/oh-my-zsh.sh
 
 antigen bundle andrewferrier/fzf-z
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zdharma/fast-syntax-highlighting
 
 # User configuration
 
@@ -319,16 +352,12 @@ antigen bundle andrewferrier/fzf-z
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 # source "/opt/ros/melodic/setup.zsh"
 # source "$HOME/catkin_ws/devel/setup.zsh"
-# source "$HOME/.bin/tmuxinator.zsh"
-# source "$HOME/.bin/fzf.zsh"
+source "$HOME/.bin/tmuxinator.zsh"
 
-source $HOME/scripts/fbr.sh
-
-export PATH="$PATH:$HOME/.vimpkg/bin"
-source $HOME/.bin/tmuxinator.zsh
+export PATH="$PATH:$HOME/.bin"
+export PATH="$PATH:/home/oswinso/.vimpkg/bin"
 
 # opam configuration
 test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
