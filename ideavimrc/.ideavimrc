@@ -9,3 +9,6 @@ map <Leader>p :action ParameterInfo<CR>
 map <C-h> :action TypeHierarchy<CR>
 imap <C-v> <Esc>:action $Paste<CR>
 map <Leader>b :action GotoDeclaration<CR>
+
+nnoremap gn :action GotoNextError<CR>
+nnoremap gp :action GotoPreviousError<CR>

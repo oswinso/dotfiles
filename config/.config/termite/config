@@ -31,3 +31,4 @@ color15 = #fdf6e3
 [options]
 font = Hasklug Nerd Font Mono 13
 clickable_url=true
+scrollback_lines = 10000

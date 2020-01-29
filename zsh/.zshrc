@@ -1,12 +1,13 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block, everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
-# Path to your oh-my-zsh installation.
 export TERM="xterm-256color"
-export ZSH="/home/oswinso/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 export EDITOR=vim
-export PATH="/usr/local/clang_7.0.1/bin:$PATH"
-export LD_LIBRARY_PATH="/usr/local/clang_7.0.1/lib:$LD_LIBRARY_PATH"
 export PATH="/usr/local/cuda/bin:$PATH"
 export PATH="/opt/cubelib/bin:$PATH"
 export PATH="/opt/cubew/bin:$PATH"
@@ -14,11 +15,55 @@ export PATH="/opt/cubegui/bin:$PATH"
 export PATH="/opt/scorep/bin:$PATH"
 export PATH="/opt/scalasca/bin:$PATH"
 export PATH="/opt/ompp/bin:$PATH"
+
+# clang_9.0.0
+export PATH="$HOME/lib/clang_9.0.0/bin:$PATH"
+export LD_LIBRARY_PATH="$HOME/lib/clang_9.0.0/lib:$LD_LIBRARY_PATH"
+
+# arm-none-eabi
+export PATH="/opt/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
+
+# Quartus
+export PATH="$HOME/intelFPGA/18.0/quartus/bin:$PATH"
+
+# TBB
+export TBBROOT=/opt/tbb/tbb2019_20191006oss
+export TBB_ROOT=$TBBROOT
+source /opt/tbb/tbb2019_20191006oss/bin/tbbvars.sh intel64 linux auto_tbbroot
+source /opt/tbb/pstl2019_20191006oss/bin/pstlvars.sh intel64 linux auto_tbbroot
+
+# g2o
+export PATH="/opt/g2o/bin:$PATH"
+export LD_LIBRARY_PATH="/usr/local/lib:$LD_LIBRARY_PATH"
+
 export PATH="/usr/local/go/bin:$PATH"
+export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# ccache
+export PATH="$(which ccache):$PATH"
+
+# distcc
+export DISTCC_SSH="ssh"
+
+# ZZZZZ
+# export _Z_CMD="z -l"
+
 export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 export CUDA_HOME="/usr/local/cuda"
 export PATH="$HOME/.npm-global/bin:$PATH"
+
+# export CCACHE_PREFIX="distcc"
+# export DISTCC_HOSTS="localhost/4 10.8.0.6/8"
+
+# LD PRELOAD
+# export LD_PRELOAD="/usr/local/lib/libmimalloc.so:$LD_PRELOAD"
+# export LD_PRELOAD="/usr/local/lib/libjemalloc.so:$LD_PRELOAD"
+
+# export CC="ccache gcc"
+# export CXX="ccache g++"
+export CC="gcc"
+export CXX="g++"
 
 source "$HOME/antigen.zsh"
 
@@ -26,7 +71,7 @@ source "$HOME/antigen.zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="powerlevel9k/powerlevel9k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 eval `dircolors ~/.dir_colors/dircolors`
 
 # POWERLEVELS 9K CONFIG
@@ -79,8 +124,8 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="╰\uF460 "
 
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context ssh root_indicator dir_writable dir )
 #POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(os_icon root_indicator context dir_writable dir vcs)
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(virtualenv root_indicator context dir_writable dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status time ssh)
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(ssh virtualenv root_indicator context dir_writable dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(command_execution_time background_jobs status time)
 
 POWERLEVEL9K_VCS_CLEAN_BACKGROUND="green"
 POWERLEVEL9K_VCS_CLEAN_FOREGROUND="$DEFAULT_BACKGROUND"
@@ -236,6 +281,9 @@ plugins=(
   docker
   virtualenv
   z
+  npm
+  cargo
+  colored-man-pages
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -272,21 +320,22 @@ antigen bundle andrewferrier/fzf-z
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-source "/opt/ros/melodic/setup.zsh"
-source ~/zsh-interactive-cd.plugin.zsh
-setopt noincappendhistory
-setopt nosharehistory
-setopt appendhistory
-source "$HOME/catkin_ws/devel/setup.zsh"
-source "$HOME/.bin/tmuxinator.zsh"
-source "$HOME/.bin/fzf.zsh"
+# source "/opt/ros/melodic/setup.zsh"
+# source "$HOME/catkin_ws/devel/setup.zsh"
+# source "$HOME/.bin/tmuxinator.zsh"
+# source "$HOME/.bin/fzf.zsh"
 
-export PATH="$PATH:/home/oswinso/.vimpkg/bin"
+source $HOME/scripts/fbr.sh
+
+export PATH="$PATH:$HOME/.vimpkg/bin"
+source $HOME/.bin/tmuxinator.zsh
 
 # opam configuration
-test -r /home/oswinso/.opam/opam-init/init.zsh && . /home/oswinso/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 antigen apply
+
+setxkbmap -option caps:escape
 
 if [ -f ~/.ssh/agent.env ] ; then
     . ~/.ssh/agent.env > /dev/null
@@ -300,3 +349,6 @@ else
     eval `ssh-agent | tee ~/.ssh/agent.env`
     ssh-add
 fi
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
