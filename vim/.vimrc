@@ -13,19 +13,18 @@ Plugin 'tpope/vim-commentary'
 " Look and feel
 Plugin 'altercation/vim-colors-solarized'
 
-python3 from powerline.vim import setup as powerline_setup
-python3 powerline_setup()
-python3 del powerline_setup
-set rtp+=~/.local/lib/python3.6/site-packages/powerline/bindings/vim
+filetype plugin indent on
+syntax on
 
-" Language support
-Plugin 'elixir-lang/vim-elixir'
-Plugin 'uarun/vim-protobuf'
-Plugin 'rust-lang/rust.vim'
-Plugin 'davidzchen/vim-bazel'
-Plugin 'keith/swift.vim'
-Plugin 'octol/vim-cpp-enhanced-highlight'
-Plugin 'cstrahan/vim-capnp'
+" vim-plug fzf
+call plug#begin()
+Plug 'junegunn/fzf', { 'do': './install --bin' }
+Plug 'junegunn/fzf.vim'
+call plug#end()
+" vim-plug end
+
+set showmode
+set showcmd
 
 " Misc
 Plugin 'mtth/scratch.vim'
@@ -79,6 +78,10 @@ set hlsearch
 set incsearch
 set magic
 set hidden
+
+" Key bindings
+let mapleader = " "
+nnoremap <silent> <Leader><Space> :Files<CR>
 
 " Visualize tabs and newlines
 set listchars=tab:▸\ ,eol:¬

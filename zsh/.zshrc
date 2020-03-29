@@ -15,9 +15,11 @@ export PATH="/opt/cubegui/bin:$PATH"
 export PATH="/opt/scorep/bin:$PATH"
 export PATH="/opt/scalasca/bin:$PATH"
 export PATH="/opt/ompp/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"
+export PATH="/opt/kitty/kitty/launcher:$PATH"
 
 # clang_9.0.0
-export PATH="$HOME/lib/clang_9.0.0/bin:$PATH"
+# export PATH="$HOME/lib/clang_9.0.0/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/lib/clang_9.0.0/lib:$LD_LIBRARY_PATH"
 
 # arm-none-eabi
@@ -25,6 +27,7 @@ export PATH="/opt/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
 
 # Quartus
 export PATH="$HOME/intelFPGA/18.0/quartus/bin:$PATH"
+export LM_LICENSE_FILE="/home/araara/intelFPGA/18.0/licenses/license.txt"
 
 # TBB
 export TBBROOT=/opt/tbb/tbb2019_20191006oss
