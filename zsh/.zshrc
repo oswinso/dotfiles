@@ -1,9 +1,25 @@
+# ssh agent
+if [ -f ~/.ssh/agent.env ] ; then
+    . ~/.ssh/agent.env > /dev/null
+    if ! kill -0 $SSH_AGENT_PID > /dev/null 2>&1; then
+        echo "Stale agent file found. Spawning new agent… "
+        eval `ssh-agent | tee ~/.ssh/agent.env`
+        ssh-add
+    fi
+else
+    echo "Starting ssh-agent"
+    eval `ssh-agent | tee ~/.ssh/agent.env`
+    ssh-add
+fi
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block, everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
+
+export LC_ALL="en_US.UTF-8"
 
 export TERM="xterm-256color"
 export ZSH="$HOME/.oh-my-zsh"
@@ -18,6 +34,24 @@ export PATH="/opt/ompp/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="/opt/kitty/kitty/launcher:$PATH"
 
+# ffmpeg
+export PATH="/home/oswinso/bin:$PATH"
+
+# Lets put /usr/bin in front of /usr/local/bin
+export PATH="/usr/bin:$PATH"
+
+# Mujuco
+export LD_LIBRARY_PATH="/home/oswinso/.mujoco/mujoco200/bin:$LD_LIBRARY_PATH"
+export MUJOCO_PY_MJKEY_PATH="/home/oswinso/.mujoco/mjkey.txt"
+export MUJOCO_PY_MUJUCO_PATH="/home/oswinso/.mujoco/mujoco200"
+export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so
+
+# TensorRT
+export LD_LIBRARY_PATH="/opt/TensorRT-6.0.1.5/lib:$LD_LIBRARY_PATH"
+
+# wine
+export PATH="/opt/wine-stable/bin:$PATH"
+
 # clang_9.0.0
 # export PATH="$HOME/lib/clang_9.0.0/bin:$PATH"
 export LD_LIBRARY_PATH="$HOME/lib/clang_9.0.0/lib:$LD_LIBRARY_PATH"
@@ -30,10 +64,10 @@ export PATH="$HOME/intelFPGA/18.0/quartus/bin:$PATH"
 export LM_LICENSE_FILE="/home/araara/intelFPGA/18.0/licenses/license.txt"
 
 # TBB
-export TBBROOT=/opt/tbb/tbb2019_20191006oss
+export TBBROOT=/opt/tbb/tbb
 export TBB_ROOT=$TBBROOT
-source /opt/tbb/tbb2019_20191006oss/bin/tbbvars.sh intel64 linux auto_tbbroot
-source /opt/tbb/pstl2019_20191006oss/bin/pstlvars.sh intel64 linux auto_tbbroot
+source /opt/tbb/tbb/bin/tbbvars.sh intel64 linux auto_tbbroot
+source /opt/tbb/pstl/bin/pstlvars.sh intel64 linux auto_tbbroot
 
 # g2o
 export PATH="/opt/g2o/bin:$PATH"
@@ -44,7 +78,7 @@ export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # ccache
-export PATH="$(which ccache):$PATH"
+# export PATH="$(which ccache):$PATH"
 
 # distcc
 export DISTCC_SSH="ssh"
@@ -57,8 +91,8 @@ export CUDA_HOME="/usr/local/cuda"
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
-# Lets put /usr/bin in front of /usr/local/bin
-export PATH="/usr/bin:$PATH"
+# CMake
+export PATH="/opt/cmake-3.17.2-Linux-x86_64/bin:$PATH"
 
 # Quartus
 export PATH="/home/oswinso/intelFPGA/18.0/quartus/bin:$PATH"
@@ -72,17 +106,11 @@ export PATH="/opt/emsdk:$PATH"
 export PATH="/opt/emsdk/upstream/emscripten:$PATH"
 export PATH="/opt/emsdk/node/12.9.1_64bit/bin:$PATH"
 
-# TBB
-export TBBROOT=/opt/tbb/tbb2019_20191006oss
-export TBB_ROOT=$TBBROOT
-source /opt/tbb/tbb2019_20191006oss/bin/tbbvars.sh intel64 linux auto_tbbroot
-source /opt/tbb/pstl2019_20191006oss/bin/pstlvars.sh intel64 linux auto_tbbroot
-
 # gcc ARM toolchain
 export PATH="/opt/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
 
 # ccache
-export PATH="/usr/lib/ccache:$PATH"
+# export PATH="/usr/lib/ccache:$PATH"
 
 # Jaus Toolset
 export JTS_COMMON_PATH="/opt/jaustoolset/GUI/templates/Common"
@@ -107,7 +135,7 @@ source "$HOME/antigen.zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="powerlevel10k/powerlevel10k"
-eval `dircolors ~/.dir_colors/dircolors`
+# eval `dircolors ~/.dir_colors/dircolors`
 
 # POWERLEVELS 9K CONFIG
 #
@@ -318,6 +346,7 @@ plugins=(
   cargo
   colored-man-pages
   fzf
+  bazel
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -357,7 +386,6 @@ antigen bundle zdharma/fast-syntax-highlighting
 
 # source "/opt/ros/melodic/setup.zsh"
 # source "$HOME/catkin_ws/devel/setup.zsh"
-source "$HOME/.bin/tmuxinator.zsh"
 
 export PATH="$PATH:$HOME/.bin"
 export PATH="$PATH:/home/oswinso/.vimpkg/bin"
@@ -368,19 +396,6 @@ test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /de
 antigen apply
 
 setxkbmap -option caps:escape
-
-if [ -f ~/.ssh/agent.env ] ; then
-    . ~/.ssh/agent.env > /dev/null
-    if ! kill -0 $SSH_AGENT_PID > /dev/null 2>&1; then
-        echo "Stale agent file found. Spawning new agent… "
-        eval `ssh-agent | tee ~/.ssh/agent.env`
-        ssh-add
-    fi
-else
-    echo "Starting ssh-agent"
-    eval `ssh-agent | tee ~/.ssh/agent.env`
-    ssh-add
-fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
