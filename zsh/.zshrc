@@ -19,8 +19,13 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+setopt extended_history
+setopt inc_append_history
+setopt share_history
+
 export LC_ALL="en_US.UTF-8"
 
+export SHELL="/usr/bin/zsh"
 export TERM="xterm-256color"
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR=vim
@@ -34,17 +39,21 @@ export PATH="/opt/ompp/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="/opt/kitty/kitty/launcher:$PATH"
 
+export PATH="/opt/julia-1.5.2/bin:$PATH"
+
 # ffmpeg
-export PATH="/home/oswinso/bin:$PATH"
+export PATH="$HOME/bin:$PATH"
 
 # Lets put /usr/bin in front of /usr/local/bin
 export PATH="/usr/bin:$PATH"
 
 # Mujuco
-export LD_LIBRARY_PATH="/home/oswinso/.mujoco/mujoco200/bin:$LD_LIBRARY_PATH"
-export MUJOCO_PY_MJKEY_PATH="/home/oswinso/.mujoco/mjkey.txt"
-export MUJOCO_PY_MUJUCO_PATH="/home/oswinso/.mujoco/mujoco200"
-export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so
+# export LD_LIBRARY_PATH="$HOME/.mujoco/mujoco200/bin:$LD_LIBRARY_PATH"
+export MUJOCO_PY_MJKEY_PATH="$HOME/.mujoco/mjkey.txt"
+export MUJOCO_PY_MUJUCO_PATH="$HOME/.mujoco/mujoco200"
+export LD_PRELOAD="/lib/x86_64-linux-gnu/libGLEW.so:/lib/x86_64-linux-gnu/libGL.so.1"
+
+export LD_LIBRARY_PATH=:"$LD_LIBRARY_PATH:$HOME/.mujoco/mjpro150/bin"
 
 # TensorRT
 export LD_LIBRARY_PATH="/opt/TensorRT-6.0.1.5/lib:$LD_LIBRARY_PATH"
@@ -63,11 +72,11 @@ export PATH="/opt/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
 export PATH="$HOME/intelFPGA/18.0/quartus/bin:$PATH"
 export LM_LICENSE_FILE="/home/araara/intelFPGA/18.0/licenses/license.txt"
 
-# TBB
-export TBBROOT=/opt/tbb/tbb
-export TBB_ROOT=$TBBROOT
-source /opt/tbb/tbb/bin/tbbvars.sh intel64 linux auto_tbbroot
-source /opt/tbb/pstl/bin/pstlvars.sh intel64 linux auto_tbbroot
+# # TBB
+# export TBBROOT=/opt/tbb/tbb
+# export TBB_ROOT=$TBBROOT
+# source /opt/tbb/tbb/bin/tbbvars.sh intel64 linux auto_tbbroot
+# source /opt/tbb/pstl/bin/pstlvars.sh intel64 linux auto_tbbroot
 
 # g2o
 export PATH="/opt/g2o/bin:$PATH"
@@ -86,16 +95,14 @@ export DISTCC_SSH="ssh"
 # ZZZZZ
 # export _Z_CMD="z -l"
 
-export LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
-export CUDA_HOME="/usr/local/cuda"
+export LD_LIBRARY_PATH="/usr/local/cuda-10.1/lib64:$LD_LIBRARY_PATH"
+export CUDA_HOME="/usr/local/cuda-10.1"
+export CUDA_DIR="/usr/local/cuda-10.1"
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # CMake
 export PATH="/opt/cmake-3.17.2-Linux-x86_64/bin:$PATH"
-
-# Quartus
-export PATH="/home/oswinso/intelFPGA/18.0/quartus/bin:$PATH"
 
 # clang-9
 export PATH="/opt/clang_9.0.0/bin:$PATH"
@@ -388,14 +395,31 @@ antigen bundle zdharma/fast-syntax-highlighting
 # source "$HOME/catkin_ws/devel/setup.zsh"
 
 export PATH="$PATH:$HOME/.bin"
-export PATH="$PATH:/home/oswinso/.vimpkg/bin"
+export PATH="$PATH:$HOME/.vimpkg/bin"
 
 # opam configuration
 test -r $HOME/.opam/opam-init/init.zsh && . $HOME/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
 
 antigen apply
 
-setxkbmap -option caps:escape
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+if command -v pyenv 1>/dev/null 2>&1; then
+ eval "$(pyenv init -)"
+fi
+
+function pretty_csv {
+    column -t -s, -n "$@" | less -F -S -X -K
+}
+
+function pretty_tsv {
+    column -t -s $'\t' -n "$@" | less -F -S -X -K
+}
+
+function notify {
+    paplay ~/useful_sfx/fe_player_phase_start.wav --volume 65536
+}

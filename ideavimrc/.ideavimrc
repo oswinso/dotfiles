@@ -6,6 +6,18 @@ map <Leader>s :action SurroundWith<CR>
 map <Leader>f :action Tool_External Tools_clang-format<CR>
 map <Leader>p :action ParameterInfo<CR>
 
+nmap <Leader>[ :action EditorCodeBlockStart<CR>
+nmap <Leader>] :action EditorCodeBlockEnd<CR>
+xmap <Leader>[ :action EditorCodeBlockStartWithSelection<CR>
+xmap <Leader>] :action EditorCodeBlockEndWithSelection<CR>
+
+nmap <C-h> :action GotoDeclaration<CR>
+nmap <C-q> :action QuickJavaDoc<CR>
+
+" Same as default IDEA action, but only in insert mode. Enter block-visual
+" mode in normal mode.
+imap <C-v> <Esc><Action>($Paste)
+
 map <C-h> :action TypeHierarchy<CR>
 imap <C-v> <Esc>:action $Paste<CR>
 map <Leader>b :action GotoDeclaration<CR>
@@ -15,3 +27,4 @@ nnoremap gp :action GotoPreviousError<CR>
 
 :set number relativenumber
 :set nu rnu
+:set ideajoin
