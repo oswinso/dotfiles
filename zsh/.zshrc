@@ -39,38 +39,34 @@ export PATH="/opt/ompp/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="/opt/kitty/kitty/launcher:$PATH"
 
-export PATH="/opt/julia-1.5.2/bin:$PATH"
+# # ffmpeg
+# export PATH="/home/oswinso/bin:$PATH"
 
-# ffmpeg
-export PATH="$HOME/bin:$PATH"
+# # Lets put /usr/bin in front of /usr/local/bin
+# export PATH="/usr/bin:$PATH"
 
-# Lets put /usr/bin in front of /usr/local/bin
-export PATH="/usr/bin:$PATH"
+# # Mujuco
+# export LD_LIBRARY_PATH="/home/oswinso/.mujoco/mujoco200/bin:$LD_LIBRARY_PATH"
+# export MUJOCO_PY_MJKEY_PATH="/home/oswinso/.mujoco/mjkey.txt"
+# export MUJOCO_PY_MUJUCO_PATH="/home/oswinso/.mujoco/mujoco200"
+# export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so
 
-# Mujuco
-# export LD_LIBRARY_PATH="$HOME/.mujoco/mujoco200/bin:$LD_LIBRARY_PATH"
-export MUJOCO_PY_MJKEY_PATH="$HOME/.mujoco/mjkey.txt"
-export MUJOCO_PY_MUJUCO_PATH="$HOME/.mujoco/mujoco200"
-export LD_PRELOAD="/lib/x86_64-linux-gnu/libGLEW.so:/lib/x86_64-linux-gnu/libGL.so.1"
+# # TensorRT
+# export LD_LIBRARY_PATH="/opt/TensorRT-6.0.1.5/lib:$LD_LIBRARY_PATH"
 
-export LD_LIBRARY_PATH=:"$LD_LIBRARY_PATH:$HOME/.mujoco/mjpro150/bin"
+# # wine
+# export PATH="/opt/wine-stable/bin:$PATH"
 
-# TensorRT
-export LD_LIBRARY_PATH="/opt/TensorRT-6.0.1.5/lib:$LD_LIBRARY_PATH"
+# # clang_9.0.0
+# # export PATH="$HOME/lib/clang_9.0.0/bin:$PATH"
+# export LD_LIBRARY_PATH="$HOME/lib/clang_9.0.0/lib:$LD_LIBRARY_PATH"
 
-# wine
-export PATH="/opt/wine-stable/bin:$PATH"
+# # arm-none-eabi
+# export PATH="/opt/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
 
-# clang_9.0.0
-# export PATH="$HOME/lib/clang_9.0.0/bin:$PATH"
-export LD_LIBRARY_PATH="$HOME/lib/clang_9.0.0/lib:$LD_LIBRARY_PATH"
-
-# arm-none-eabi
-export PATH="/opt/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
-
-# Quartus
-export PATH="$HOME/intelFPGA/18.0/quartus/bin:$PATH"
-export LM_LICENSE_FILE="/home/araara/intelFPGA/18.0/licenses/license.txt"
+# # Quartus
+# export PATH="$HOME/intelFPGA/18.0/quartus/bin:$PATH"
+# export LM_LICENSE_FILE="/home/araara/intelFPGA/18.0/licenses/license.txt"
 
 # # TBB
 # export TBBROOT=/opt/tbb/tbb
@@ -423,3 +419,6 @@ function pretty_tsv {
 function notify {
     paplay ~/useful_sfx/fe_player_phase_start.wav --volume 65536
 }
+
+# Allow running with discrete graphics
+alias prime-run="__NV_PRIME_RENDER_OFFLOAD=1 __GLX_VENDOR_LIBRARY_NAME=nvidia __VK_LAYER_NV_optimus=NVIDIA_only"
