@@ -38,8 +38,12 @@ export PATH="/opt/scalasca/bin:$PATH"
 export PATH="/opt/ompp/bin:$PATH"
 export PATH="$HOME/.bin:$PATH"
 export PATH="/opt/kitty/kitty/launcher:$PATH"
+export PATH="/opt/libtorch/bin:$PATH"
 
 export PATH="/opt/julia-1.5.2/bin:$PATH"
+
+# Magma.
+export LD_LIBRARY_PATH="/usr/local/magma/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 
 # ffmpeg
 export PATH="$HOME/bin:$PATH"
@@ -47,23 +51,26 @@ export PATH="$HOME/bin:$PATH"
 # Lets put /usr/bin in front of /usr/local/bin
 export PATH="/usr/bin:$PATH"
 
-# Mujuco
-# export LD_LIBRARY_PATH="$HOME/.mujoco/mujoco200/bin:$LD_LIBRARY_PATH"
-export MUJOCO_PY_MJKEY_PATH="$HOME/.mujoco/mjkey.txt"
+# QT 15.5
+export PATH="$HOME/Qt/5.15.2/gcc_64/bin/:$PATH"
+
+# # Mujuco
+# # export LD_LIBRARY_PATH="$HOME/.mujoco/mujoco200/bin:$LD_LIBRARY_PATH"
+# export MUJOCO_PY_MJKEY_PATH="$HOME/.mujoco/mjkey.txt"
 export MUJOCO_PY_MUJUCO_PATH="$HOME/.mujoco/mujoco200"
-export LD_PRELOAD="/lib/x86_64-linux-gnu/libGLEW.so:/lib/x86_64-linux-gnu/libGL.so.1"
+# export LD_PRELOAD="/lib/x86_64-linux-gnu/libGLEW.so:/lib/x86_64-linux-gnu/libGL.so.1"
 
-export LD_LIBRARY_PATH=:"$LD_LIBRARY_PATH:$HOME/.mujoco/mjpro150/bin"
+export LD_LIBRARY_PATH=:"$LD_LIBRARY_PATH:$HOME/.mujoco/mujoco200/bin"
 
-# TensorRT
-export LD_LIBRARY_PATH="/opt/TensorRT-6.0.1.5/lib:$LD_LIBRARY_PATH"
+# # TensorRT
+# export LD_LIBRARY_PATH="/opt/TensorRT-6.0.1.5/lib:$LD_LIBRARY_PATH"
 
-# wine
-export PATH="/opt/wine-stable/bin:$PATH"
+# # wine
+# export PATH="/opt/wine-stable/bin:$PATH"
 
-# clang_9.0.0
-# export PATH="$HOME/lib/clang_9.0.0/bin:$PATH"
-export LD_LIBRARY_PATH="$HOME/lib/clang_9.0.0/lib:$LD_LIBRARY_PATH"
+# # clang_9.0.0
+# # export PATH="$HOME/lib/clang_9.0.0/bin:$PATH"
+# export LD_LIBRARY_PATH="$HOME/lib/clang_9.0.0/lib:$LD_LIBRARY_PATH"
 
 # arm-none-eabi
 export PATH="/opt/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
@@ -95,9 +102,13 @@ export DISTCC_SSH="ssh"
 # ZZZZZ
 # export _Z_CMD="z -l"
 
-export LD_LIBRARY_PATH="/usr/local/cuda-10.1/lib64:$LD_LIBRARY_PATH"
-export CUDA_HOME="/usr/local/cuda-10.1"
-export CUDA_DIR="/usr/local/cuda-10.1"
+export LD_LIBRARY_PATH="/usr/local/cuda/lib64:/usr/local/cuda/extras/CUPTI/lib64:$LD_LIBRARY_PATH"
+export CUDA_HOME="/usr/local/cuda"
+export CUDA_DIR="/usr/local/cuda"
+
+export CUDACXX="nvcc"
+export CMAKE_CUDA_COMPILER="nvcc"
+
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
@@ -423,3 +434,12 @@ function pretty_tsv {
 function notify {
     paplay ~/useful_sfx/fe_player_phase_start.wav --volume 65536
 }
+
+bindkey -r "\e[[21~"
+bindkey -r "\e[[23~"
+
+# Copy to clipboard shortcut.
+alias copy='xclip -sel clip'
+
+# Useful for python scripts.
+export ALERT_SOUND="$HOME/useful_sfx/fe_player_phase_start.wav"

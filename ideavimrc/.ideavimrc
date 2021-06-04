@@ -22,9 +22,32 @@ map <C-h> :action TypeHierarchy<CR>
 imap <C-v> <Esc>:action $Paste<CR>
 map <Leader>b :action GotoDeclaration<CR>
 
+" Closing tabs
+nmap <leader>q :action CloseContent<cr>
+nmap <leader>Q :action ReopenClosedTab<cr>
+nmap <leader>wq :action CloseAllEditorsButActive<cr>
+
+" To navigate between split panes
+nmap <leader>wo :action NextSplitter<cr>
+nmap <leader>wp :action PrevSplitter<cr>
+nmap <leader>j :action PrevSplitter<cr>
+
+" Splits manipulation
+nmap <leader>ws :action SplitHorizontally<cr>
+nmap <leader>wv :action SplitVertically<cr>
+nmap <leader>wc :action Unsplit<cr>
+nmap <leader>wC :action UnsplitAll<cr>
+nmap <leader>wd :action OpenEditorInOppositeTabGroup<cr>
+
 nnoremap gn :action GotoNextError<CR>
 nnoremap gp :action GotoPreviousError<CR>
 
 :set number relativenumber
 :set nu rnu
 :set ideajoin
+
+" Use the idea Back/Forward instead of the vim one so we
+" don't jump between different projects.
+nnoremap <C-o> :action Back<CR>
+nnoremap <C-i> :action Forward<CR>
+
