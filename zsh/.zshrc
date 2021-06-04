@@ -40,16 +40,21 @@ export PATH="$HOME/.bin:$PATH"
 export PATH="/opt/kitty/kitty/launcher:$PATH"
 export PATH="/opt/libtorch/bin:$PATH"
 
-export PATH="/opt/julia-1.5.2/bin:$PATH"
+# # ffmpeg
+# export PATH="/home/oswinso/bin:$PATH"
 
 # Magma.
 export LD_LIBRARY_PATH="/usr/local/magma/lib${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}"
 
 # ffmpeg
 export PATH="$HOME/bin:$PATH"
+# # Lets put /usr/bin in front of /usr/local/bin
 
-# Lets put /usr/bin in front of /usr/local/bin
-export PATH="/usr/bin:$PATH"
+# # Mujuco
+# export LD_LIBRARY_PATH="/home/oswinso/.mujoco/mujoco200/bin:$LD_LIBRARY_PATH"
+# export MUJOCO_PY_MJKEY_PATH="/home/oswinso/.mujoco/mjkey.txt"
+# export MUJOCO_PY_MUJUCO_PATH="/home/oswinso/.mujoco/mujoco200"
+# export LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libGLEW.so
 
 # QT 15.5
 export PATH="$HOME/Qt/5.15.2/gcc_64/bin/:$PATH"
@@ -74,10 +79,6 @@ export LD_LIBRARY_PATH=:"$LD_LIBRARY_PATH:$HOME/.mujoco/mujoco200/bin"
 
 # arm-none-eabi
 export PATH="/opt/gcc-arm-none-eabi-8-2018-q4-major/bin:$PATH"
-
-# Quartus
-export PATH="$HOME/intelFPGA/18.0/quartus/bin:$PATH"
-export LM_LICENSE_FILE="/home/araara/intelFPGA/18.0/licenses/license.txt"
 
 # # TBB
 # export TBBROOT=/opt/tbb/tbb
